@@ -1,0 +1,1 @@
+export const CLAVE_TOKEN = "pixelworks_token";

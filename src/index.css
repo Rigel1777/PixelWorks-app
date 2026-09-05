@@ -1,13 +1,523 @@
-@layer tailwind-base, primereact, tailwind-utilities;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@import 'primereact/resources/themes/lara-light-blue/theme.css' layer(primereact);
-@import 'primeicons/primeicons.css';
-
-@layer tailwind-base {
-  @tailwind base;
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #e5e7eb;
+  background: #1b1f27;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@layer tailwind-utilities {
-  @tailwind components;
-  @tailwind utilities;
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background: #1b1f27;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111827;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+/* =========================================================
+   PIXELWORKS - TABLA DE CATEGORÍAS
+   ========================================================= */
+
+.pixelworks-table .p-datatable-wrapper {
+  background: #020617;
+}
+
+.pixelworks-table .p-datatable-table {
+  background: #020617;
+}
+
+.pixelworks-table .p-datatable-thead > tr > th {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+.pixelworks-table .p-datatable-tbody > tr {
+  background: #020617;
+  color: #e2e8f0;
+}
+
+.pixelworks-table .p-datatable-tbody > tr > td {
+  background: #020617;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+.pixelworks-table .p-datatable-tbody > tr:nth-child(even) {
+  background: #0f172a;
+}
+
+.pixelworks-table .p-datatable-tbody > tr:nth-child(even) > td {
+  background: #0f172a;
+}
+
+.pixelworks-table .p-datatable-tbody > tr:hover {
+  background: #1e293b;
+}
+
+.pixelworks-table .p-datatable-tbody > tr:hover > td {
+  background: #1e293b;
+}
+
+.pixelworks-table .p-paginator {
+  background: #020617;
+  color: #cbd5e1;
+  border-color: #334155;
+}
+
+.pixelworks-table .p-paginator .p-paginator-page,
+.pixelworks-table .p-paginator .p-paginator-next,
+.pixelworks-table .p-paginator .p-paginator-prev,
+.pixelworks-table .p-paginator .p-paginator-first,
+.pixelworks-table .p-paginator .p-paginator-last {
+  color: #cbd5e1;
+}
+
+.pixelworks-table .p-paginator .p-paginator-page.p-highlight {
+  background: #334155;
+  color: #ffffff;
+}
+
+.pixelworks-table .p-dropdown {
+  background: #0f172a;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+/* =========================================================
+   PIXELWORKS - DIALOGS / MODALES
+   ========================================================= */
+
+.p-dialog {
+  background: #0f172a !important;
+  border: 1px solid #334155 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65) !important;
+  overflow: hidden;
+}
+
+.p-dialog .p-dialog-header {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  border-bottom: 1px solid #334155 !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+.p-dialog .p-dialog-title {
+  color: #f8fafc !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+}
+
+.p-dialog .p-dialog-header-icons {
+  gap: 0.25rem;
+}
+
+.p-dialog .p-dialog-header-icon {
+  color: #cbd5e1 !important;
+  background: transparent !important;
+}
+
+.p-dialog .p-dialog-header-icon:hover {
+  color: #ffffff !important;
+  background: #1e293b !important;
+}
+
+.p-dialog .p-dialog-content {
+  background: #0f172a !important;
+  color: #e2e8f0 !important;
+  padding: 1.5rem !important;
+}
+
+.p-dialog .p-dialog-footer {
+  background: #0f172a !important;
+  color: #e2e8f0 !important;
+  border-top: 1px solid #334155 !important;
+  padding: 1rem 1.5rem !important;
+}
+
+/* =========================================================
+   ETIQUETAS DE LOS CAMPOS
+   ========================================================= */
+
+.p-dialog label {
+  color: #e2e8f0 !important;
+}
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.p-dialog .p-inputtext,
+.p-dialog .p-inputtextarea,
+.p-dialog .p-dropdown,
+.p-dialog .p-inputnumber,
+.p-dialog .p-calendar {
+  width: 100%;
+}
+
+.p-dialog .p-inputtext,
+.p-dialog .p-inputtextarea {
+  background: #020617 !important;
+  color: #f8fafc !important;
+  border: 1px solid #475569 !important;
+}
+
+.p-dialog .p-inputtext::placeholder,
+.p-dialog .p-inputtextarea::placeholder {
+  color: #64748b !important;
+}
+
+.p-dialog .p-inputtext:hover,
+.p-dialog .p-inputtextarea:hover {
+  border-color: #64748b !important;
+}
+
+.p-dialog .p-inputtext:focus,
+.p-dialog .p-inputtextarea:focus {
+  border-color: #94a3b8 !important;
+  box-shadow: 0 0 0 1px #94a3b8 !important;
+}
+
+/* =========================================================
+   DROPDOWN
+   ========================================================= */
+
+.p-dialog .p-dropdown {
+  background: #020617 !important;
+  border: 1px solid #475569 !important;
+  color: #f8fafc !important;
+}
+
+.p-dialog .p-dropdown:hover {
+  border-color: #64748b !important;
+}
+
+.p-dialog .p-dropdown.p-focus {
+  border-color: #94a3b8 !important;
+  box-shadow: 0 0 0 1px #94a3b8 !important;
+}
+
+.p-dialog .p-dropdown .p-dropdown-label {
+  color: #f8fafc !important;
+}
+
+.p-dialog .p-dropdown .p-dropdown-label.p-placeholder {
+  color: #64748b !important;
+}
+
+.p-dialog .p-dropdown .p-dropdown-trigger {
+  color: #cbd5e1 !important;
+}
+
+/* =========================================================
+   PANEL DEL DROPDOWN
+   ========================================================= */
+
+.p-dropdown-panel {
+  background: #0f172a !important;
+  border: 1px solid #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+.p-dropdown-panel .p-dropdown-items {
+  background: #0f172a !important;
+}
+
+.p-dropdown-panel .p-dropdown-item {
+  color: #e2e8f0 !important;
+  background: transparent !important;
+}
+
+.p-dropdown-panel .p-dropdown-item:hover {
+  background: #1e293b !important;
+  color: #ffffff !important;
+}
+
+.p-dropdown-panel .p-dropdown-item.p-highlight {
+  background: #334155 !important;
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   CALENDAR
+   ========================================================= */
+
+.p-dialog .p-calendar .p-inputtext {
+  background: #020617 !important;
+  color: #f8fafc !important;
+}
+
+.p-dialog .p-calendar .p-datepicker-trigger {
+  background: #1e293b !important;
+  color: #cbd5e1 !important;
+  border-color: #475569 !important;
+}
+
+.p-dialog .p-calendar .p-datepicker-trigger:hover {
+  background: #334155 !important;
+  color: #ffffff !important;
+}
+
+.p-datepicker {
+  background: #0f172a !important;
+  border: 1px solid #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+.p-datepicker .p-datepicker-header {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  border-bottom: 1px solid #334155 !important;
+}
+
+.p-datepicker table td > span {
+  color: #e2e8f0 !important;
+}
+
+.p-datepicker table td > span:hover {
+  background: #1e293b !important;
+  color: #ffffff !important;
+}
+
+.p-datepicker table td > span.p-highlight {
+  background: #334155 !important;
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   INPUT NUMBER
+   ========================================================= */
+
+.p-dialog .p-inputnumber .p-inputnumber-input {
+  background: #020617 !important;
+  color: #f8fafc !important;
+  border-color: #475569 !important;
+}
+
+.p-dialog .p-inputnumber .p-inputnumber-button {
+  background: #1e293b !important;
+  color: #cbd5e1 !important;
+  border-color: #475569 !important;
+}
+
+.p-dialog .p-inputnumber .p-inputnumber-button:hover {
+  background: #334155 !important;
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   BOTONES DEL MODAL
+   ========================================================= */
+
+.p-dialog .p-dialog-footer .p-button {
+  min-width: 110px;
+}
+
+/* Cancelar */
+
+.p-dialog .p-dialog-footer .p-button.p-button-secondary {
+  background: transparent !important;
+  color: #cbd5e1 !important;
+  border-color: #64748b !important;
+}
+
+.p-dialog .p-dialog-footer .p-button.p-button-secondary:hover {
+  background: #1e293b !important;
+  color: #ffffff !important;
+  border-color: #94a3b8 !important;
+}
+
+/* =========================================================
+   ERRORES DE VALIDACIÓN
+   ========================================================= */
+
+.p-dialog .p-error {
+  color: #f87171 !important;
+}
+
+.p-dialog .p-invalid {
+  border-color: #ef4444 !important;
+}
+
+.p-dialog .p-invalid:focus {
+  box-shadow: 0 0 0 1px #ef4444 !important;
+}
+
+/* =========================================================
+   TEXTO SECUNDARIO
+   ========================================================= */
+
+.p-dialog small {
+  color: #94a3b8;
+}
+
+/* =========================================================
+   OVERLAY
+   ========================================================= */
+
+.p-dialog-mask {
+  background: rgba(2, 6, 23, 0.75) !important;
+  backdrop-filter: blur(3px);
+}
+/* =========================================================
+   PIXELWORKS - TOAST / ALERTAS
+   ========================================================= */
+
+.p-toast {
+  opacity: 1 !important;
+}
+
+/* Contenedor general */
+
+.p-toast .p-toast-message {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.18) !important;
+  overflow: hidden;
+}
+
+/* ÉXITO */
+
+.p-toast .p-toast-message-success {
+  border-left: 5px solid #22c55e !important;
+}
+
+.p-toast .p-toast-message-success
+.p-toast-message-icon {
+  color: #16a34a !important;
+}
+
+.p-toast .p-toast-message-success
+.p-toast-summary {
+  color: #15803d !important;
+  font-weight: 700 !important;
+}
+
+.p-toast .p-toast-message-success
+.p-toast-detail {
+  color: #166534 !important;
+}
+
+/* ERROR */
+
+.p-toast .p-toast-message-error {
+  border-left: 5px solid #ef4444 !important;
+}
+
+.p-toast .p-toast-message-error
+.p-toast-message-icon {
+  color: #dc2626 !important;
+}
+
+.p-toast .p-toast-message-error
+.p-toast-summary {
+  color: #b91c1c !important;
+  font-weight: 700 !important;
+}
+
+.p-toast .p-toast-message-error
+.p-toast-detail {
+  color: #991b1b !important;
+}
+
+/* ADVERTENCIA / VALIDACIÓN */
+
+.p-toast .p-toast-message-warn {
+  border-left: 5px solid #f59e0b !important;
+}
+
+.p-toast .p-toast-message-warn
+.p-toast-message-icon {
+  color: #d97706 !important;
+}
+
+.p-toast .p-toast-message-warn
+.p-toast-summary {
+  color: #b45309 !important;
+  font-weight: 700 !important;
+}
+
+.p-toast .p-toast-message-warn
+.p-toast-detail {
+  color: #92400e !important;
+}
+
+/* INFORMACIÓN */
+
+.p-toast .p-toast-message-info {
+  border-left: 5px solid #3b82f6 !important;
+}
+
+.p-toast .p-toast-message-info
+.p-toast-message-icon {
+  color: #2563eb !important;
+}
+
+.p-toast .p-toast-message-info
+.p-toast-summary {
+  color: #1d4ed8 !important;
+  font-weight: 700 !important;
+}
+
+.p-toast .p-toast-message-info
+.p-toast-detail {
+  color: #1e40af !important;
+}
+
+/* BOTÓN CERRAR */
+
+.p-toast .p-toast-icon-close {
+  color: #64748b !important;
+}
+
+.p-toast .p-toast-icon-close:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
 }
