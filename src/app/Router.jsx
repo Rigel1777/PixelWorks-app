@@ -9,60 +9,54 @@ import AppLayout from "./AppLayout";
 
 import Login from "../auth/Login";
 import RutaProtegida from "../auth/RutaProtegida";
+
 import Categorias from "../components/catalogos/Categorias";
 import Desarrolladores from "../components/catalogos/Desarrolladores";
 import Productos from "../components/productos/Productos";
+import Ofertas from "../components/catalogos/Ofertas";
+import Dashboard from "../components/dashboard/Dashboard";
 
-function Inicio() {
+function Compras() {
   return (
     <div>
-      <h2 className="text-3xl font-bold text-white">
-        Panel de Administración
-      </h2>
-
+      <h2 className="text-3xl font-bold text-white">Compras</h2>
       <p className="text-slate-400 mt-2">
-        Bienvenido al panel administrativo de PixelWorks.
+        Módulo de compras en construcción.
       </p>
     </div>
   );
 }
 
-
-
-
-function Ofertas() {
-  return <PaginaTemporal titulo="Ofertas" />;
-}
-
-function Compras() {
-  return <PaginaTemporal titulo="Compras" />;
-}
-
 function ClavesActivacion() {
   return (
-    <PaginaTemporal
-      titulo="Claves de Activación"
-    />
+    <div>
+      <h2 className="text-3xl font-bold text-white">
+        Claves de Activación
+      </h2>
+      <p className="text-slate-400 mt-2">
+        Gestión de claves de activación.
+      </p>
+    </div>
   );
 }
 
 function Usuarios() {
-  return <PaginaTemporal titulo="Usuarios" />;
+  return (
+    <div>
+      <h2 className="text-3xl font-bold text-white">Usuarios</h2>
+      <p className="text-slate-400 mt-2">
+        Gestión de usuarios en construcción.
+      </p>
+    </div>
+  );
 }
 
 function Reportes() {
-  return <PaginaTemporal titulo="Reportes" />;
-}
-
-function PaginaTemporal({ titulo }) {
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold text-white">
-        {titulo}
-      </h2>
-
+    <div>
+      <h2 className="text-3xl font-bold text-white">Reportes</h2>
       <p className="text-slate-400 mt-2">
-        Módulo en construcción.
+        Módulo de reportes en construcción.
       </p>
     </div>
   );
@@ -73,81 +67,74 @@ export default function Router() {
     <BrowserRouter>
       <Routes>
 
-        {/* Login */}
-        <Route
-          path="/login"
-          element={<Login />}
-        />
+        <Route path="/login" element={<Login />} />
 
-        {/* Área protegida */}
         <Route
+          path="/"
           element={
             <RutaProtegida>
               <AppLayout />
             </RutaProtegida>
           }
         >
+          {/* DASHBOARD — SOLO ADMIN */}
           <Route
-            path="/"
-            element={<Inicio />}
+            index
+            element={
+              <RutaProtegida rolesPermisos={["ADMIN"]}>
+                <Dashboard />
+              </RutaProtegida>
+            }
           />
 
           <Route
-            path="/juegos"
+            path="juegos"
             element={<Productos />}
           />
 
           <Route
-            path="/catalogos/categorias"
+            path="catalogos/categorias"
             element={<Categorias />}
           />
 
           <Route
-            path="/catalogos/desarrolladores"
+            path="catalogos/desarrolladores"
             element={<Desarrolladores />}
           />
 
           <Route
-            path="/ofertas"
+            path="catalogos/ofertas"
             element={<Ofertas />}
           />
 
           <Route
-            path="/compras"
+            path="compras"
             element={<Compras />}
           />
 
           <Route
-            path="/claves-activacion"
+            path="claves-activacion"
             element={<ClavesActivacion />}
           />
 
           <Route
-            path="/usuarios"
+            path="usuarios"
             element={
-              <RutaProtegida
-                rolesPermisos={["ADMIN"]}
-              >
+              <RutaProtegida rolesPermisos={["ADMIN"]}>
                 <Usuarios />
               </RutaProtegida>
             }
           />
 
           <Route
-            path="/reportes"
+            path="reportes"
             element={<Reportes />}
           />
         </Route>
 
-        {/* Ruta no encontrada */}
         <Route
           path="*"
-          element={
-            <Navigate
-              to="/"
-              replace
-            />
-          }
+          element={<Navigate to="/" replace />}
         />
 
       </Routes>

@@ -16,7 +16,7 @@ const opcionesMenu = [
   },
 
   {
-    etiqueta: "Catálogos",
+    etiqueta: "Agregar",
     icono: "pi pi-th-large",
     submenu: [
       {
@@ -27,14 +27,16 @@ const opcionesMenu = [
         etiqueta: "Desarrolladores",
         ruta: "/catalogos/desarrolladores",
       },
+      
+      {
+        etiqueta: "Ofertas",
+        icono: "pi pi-tag",
+        ruta: "/catalogos/ofertas",
+      },
     ],
   },
 
-  {
-    etiqueta: "Ofertas",
-    icono: "pi pi-tag",
-    ruta: "/ofertas",
-  },
+  
 
   {
     etiqueta: "Compras",
