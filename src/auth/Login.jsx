@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
 import axiosClient from "../services/axiosClient";
 import { useAuth } from "./AuthContext";
@@ -17,12 +18,11 @@ export default function Login() {
   const navigate = useNavigate();
 
   if (estaAutenticado) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/tienda" replace />;
   }
 
   const manejarEnvio = async (evento) => {
     evento.preventDefault();
-
     setEnviando(true);
 
     try {
@@ -34,11 +34,16 @@ export default function Login() {
         }
       );
 
-      login(respuesta.data.token);
+      const token = respuesta.data.token;
+      login(token);
 
-      navigate("/", {
-        replace: true,
-      });
+      const payload = jwtDecode(token);
+
+      if (payload.rol === "JUGADOR") {
+        navigate("/tienda", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
     } catch (error) {
       console.error(error);
 
@@ -78,7 +83,7 @@ export default function Login() {
           </h1>
 
           <p className="text-sm text-slate-400 mt-2">
-            Panel de administración
+            Plataforma de videojuegos
           </p>
         </div>
 
@@ -87,9 +92,8 @@ export default function Login() {
             Correo electrónico
           </label>
 
-          <span className="p-input-icon-left w-full">
-            <i className="pi pi-envelope" />
-
+          <div className="flex items-center bg-slate-800 border border-slate-700 rounded-lg px-3.5 focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/20">
+            <i className="pi pi-envelope text-slate-400 mr-3 text-base" />
             <input
               type="email"
               value={correo}
@@ -98,21 +102,18 @@ export default function Login() {
               }
               className="
                 w-full
-                bg-slate-800
-                border border-slate-700
+                bg-transparent
                 text-white
-                rounded-lg
-                px-10 py-2.5
+                py-2.5
                 outline-none
-                focus:border-sky-500
-                focus:ring-2
-                focus:ring-sky-500/20
+                border-none
+                text-sm
               "
               placeholder="correo@ejemplo.com"
               required
               autoFocus
             />
-          </span>
+          </div>
         </div>
 
         <div className="mb-7">
@@ -120,9 +121,8 @@ export default function Login() {
             Contraseña
           </label>
 
-          <span className="p-input-icon-left w-full">
-            <i className="pi pi-lock" />
-
+          <div className="flex items-center bg-slate-800 border border-slate-700 rounded-lg px-3.5 focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/20">
+            <i className="pi pi-lock text-slate-400 mr-3 text-base" />
             <input
               type="password"
               value={password}
@@ -131,20 +131,17 @@ export default function Login() {
               }
               className="
                 w-full
-                bg-slate-800
-                border border-slate-700
+                bg-transparent
                 text-white
-                rounded-lg
-                px-10 py-2.5
+                py-2.5
                 outline-none
-                focus:border-sky-500
-                focus:ring-2
-                focus:ring-sky-500/20
+                border-none
+                text-sm
               "
               placeholder="••••••••"
               required
             />
-          </span>
+          </div>
         </div>
 
         <button

@@ -9,6 +9,7 @@ export default function RutaProtegida({
     estaAutenticado,
     cargando,
     tienePermiso,
+    usuario,
   } = useAuth();
 
   if (cargando) {
@@ -27,7 +28,8 @@ export default function RutaProtegida({
     rolesPermisos &&
     !tienePermiso(rolesPermisos)
   ) {
-    return <Navigate to="/" replace />;
+    const destino = usuario?.rol === "JUGADOR" ? "/tienda" : "/";
+    return <Navigate to={destino} replace />;
   }
 
   return children;

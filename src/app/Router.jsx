@@ -12,6 +12,8 @@ import RutaProtegida from "../auth/RutaProtegida";
 import Categorias from "../components/catalogos/Categorias";
 import Desarrolladores from "../components/catalogos/Desarrolladores";
 import Productos from "../components/productos/Productos";
+import TiendaLayout from "./TiendaLayout";
+import Tienda from "../components/jugadores/Tienda";
 
 function Inicio() {
   return (
@@ -26,9 +28,6 @@ function Inicio() {
     </div>
   );
 }
-
-
-
 
 function Ofertas() {
   return <PaginaTemporal titulo="Ofertas" />;
@@ -79,10 +78,32 @@ export default function Router() {
           element={<Login />}
         />
 
-        {/* Área protegida */}
+        {/* --- ÁREA DEL JUGADOR (TIENDA) --- */}
         <Route
           element={
-            <RutaProtegida>
+            <RutaProtegida rolesPermisos={["JUGADOR"]}>
+              <TiendaLayout />
+            </RutaProtegida>
+          }
+        >
+          <Route 
+            path="/tienda" 
+            element={<Tienda />} 
+          />
+          <Route 
+            path="/tienda/carrito" 
+            element={<PaginaTemporal titulo="Mi Carrito" />} 
+          />
+          <Route 
+            path="/tienda/historial" 
+            element={<PaginaTemporal titulo="Mi Biblioteca de Juegos" />} 
+          />
+        </Route>
+
+        {/* --- ÁREA ADMINISTRATIVA (BLOQUEADA PARA JUGADORES) --- */}
+        <Route
+          element={
+            <RutaProtegida rolesPermisos={["ADMIN", "DESARROLLADOR"]}>
               <AppLayout />
             </RutaProtegida>
           }
@@ -144,7 +165,7 @@ export default function Router() {
           path="*"
           element={
             <Navigate
-              to="/"
+              to="/tienda"
               replace
             />
           }
