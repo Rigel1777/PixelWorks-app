@@ -521,3 +521,164 @@ button {
   background: #f1f5f9 !important;
   color: #0f172a !important;
 }
+
+/* =========================================================
+   PIXELWORKS - MULTISELECT DE OFERTAS
+   ========================================================= */
+
+.pixelworks-dropdown-panel.p-multiselect-panel {
+  background: #0f172a !important;
+  border: 1px solid #334155 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45) !important;
+  overflow: hidden;
+}
+
+/* Encabezado / buscador */
+.pixelworks-dropdown-panel .p-multiselect-header {
+  background: #0f172a !important;
+  border-bottom: 1px solid #334155 !important;
+  padding: 0.75rem !important;
+}
+
+.pixelworks-dropdown-panel .p-multiselect-filter-container {
+  background: #0f172a !important;
+}
+
+.pixelworks-dropdown-panel .p-multiselect-filter {
+  background: #020617 !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #334155 !important;
+  border-radius: 8px !important;
+}
+
+.pixelworks-dropdown-panel .p-multiselect-filter::placeholder {
+  color: #64748b !important;
+}
+
+.pixelworks-dropdown-panel .p-multiselect-filter:focus {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 0 1px #38bdf8 !important;
+}
+
+/* Icono de búsqueda */
+.pixelworks-dropdown-panel .p-multiselect-filter-icon {
+  color: #94a3b8 !important;
+}
+
+/* Lista */
+.pixelworks-dropdown-panel .p-multiselect-items-wrapper {
+  background: #0f172a !important;
+}
+
+.pixelworks-dropdown-panel .p-multiselect-item {
+  background: #0f172a !important;
+  color: #e2e8f0 !important;
+  padding: 0.75rem 1rem !important;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.pixelworks-dropdown-panel .p-multiselect-item:hover {
+  background: #1e293b !important;
+  color: #ffffff !important;
+}
+
+.pixelworks-dropdown-panel .p-multiselect-item.p-highlight {
+  background: #172554 !important;
+  color: #ffffff !important;
+}
+
+.pixelworks-dropdown-panel .p-multiselect-item.p-highlight:hover {
+  background: #1e3a8a !important;
+}
+
+/* Checkbox */
+.pixelworks-dropdown-panel .p-checkbox .p-checkbox-box {
+  background: #020617 !important;
+  border: 1px solid #475569 !important;
+  border-radius: 5px !important;
+}
+
+.pixelworks-dropdown-panel
+  .p-checkbox
+  .p-checkbox-box:hover {
+  border-color: #38bdf8 !important;
+}
+
+.pixelworks-dropdown-panel
+  .p-checkbox.p-highlight
+  .p-checkbox-box {
+  background: #0284c7 !important;
+  border-color: #0284c7 !important;
+  color: #ffffff !important;
+}
+
+.pixelworks-dropdown-panel
+  .p-checkbox.p-highlight
+  .p-checkbox-box
+  .p-checkbox-icon {
+  color: #ffffff !important;
+}
+
+/* Texto de cada juego */
+.pixelworks-dropdown-panel .p-multiselect-item span {
+  color: #e2e8f0 !important;
+}
+
+.pixelworks-dropdown-panel
+  .p-multiselect-item.p-highlight
+  span {
+  color: #ffffff !important;
+}
+
+/* Cuando no hay resultados */
+.pixelworks-dropdown-panel .p-multiselect-empty-message {
+  background: #0f172a !important;
+  color: #94a3b8 !important;
+  padding: 1rem !important;
+}
+
+/* Chips seleccionados dentro del MultiSelect */
+.p-multiselect .p-multiselect-token {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  color: #e2e8f0 !important;
+  border-radius: 7px !important;
+}
+
+.p-multiselect .p-multiselect-token-icon {
+  color: #94a3b8 !important;
+}
+
+.p-multiselect .p-multiselect-token-icon:hover {
+  color: #ffffff !important;
+}
+
+/* Contenedor cerrado */
+.p-multiselect {
+  background: #020617 !important;
+  border: 1px solid #334155 !important;
+  color: #e2e8f0 !important;
+  border-radius: 8px !important;
+}
+
+.p-multiselect:not(.p-disabled):hover {
+  border-color: #475569 !important;
+}
+
+.p-multiselect:not(.p-disabled).p-focus {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 0 1px #38bdf8 !important;
+}
+
+.p-multiselect .p-multiselect-label {
+  color: #e2e8f0 !important;
+}
+
+.p-multiselect .p-multiselect-label.p-placeholder {
+  color: #64748b !important;
+}
+
+.p-multiselect .p-multiselect-trigger {
+  color: #94a3b8 !important;
+}
