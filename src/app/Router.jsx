@@ -7,6 +7,7 @@ import {
 
 import AppLayout from "./AppLayout";
 import Login from "../auth/Login";
+import Registro from "../auth/Registro";
 import RutaProtegida from "../auth/RutaProtegida";
 
 import Categorias from "../components/catalogos/Categorias";
@@ -14,10 +15,16 @@ import Desarrolladores from "../components/catalogos/Desarrolladores";
 import Productos from "../components/productos/Productos";
 import Ofertas from "../components/catalogos/Ofertas";
 import Dashboard from "../components/dashboard/Dashboard";
+<<<<<<< HEAD
 import ClavesActivacion from "../components/catalogos/ClavesActivacion";
+=======
+import Reportes from "../components/reportes/Reportes";
+>>>>>>> d742fe184d2bc5edc3dafab7b16ed2fa14166e91
 
 import TiendaLayout from "./TiendaLayout";
 import Tienda from "../components/jugadores/Tienda";
+import Carrito from "../components/jugadores/Carrito";
+import Historial from "../components/jugadores/Historial";
 
 // --- COMPONENTES TEMPORALES ADMINISTRATIVOS ---
 function Compras() {
@@ -45,17 +52,6 @@ function Usuarios() {
   );
 }
 
-function Reportes() {
-  return (
-    <div>
-      <h2 className="text-3xl font-bold text-white">Reportes</h2>
-      <p className="text-slate-400 mt-2">
-        Módulo de reportes en construcción.
-      </p>
-    </div>
-  );
-}
-
 // --- PLANTILLA PARA RUTAS EN CONSTRUCCIÓN ---
 function PaginaTemporal({ titulo }) {
   return (
@@ -71,6 +67,7 @@ export default function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
 
         {/* --- ÁREA DEL JUGADOR (TIENDA) --- */}
         <Route
@@ -82,8 +79,14 @@ export default function Router() {
           }
         >
           <Route path="/tienda" element={<Tienda />} />
-          <Route path="/tienda/carrito" element={<PaginaTemporal titulo="Mi Carrito" />} />
-          <Route path="/tienda/historial" element={<PaginaTemporal titulo="Mi Biblioteca de Juegos" />} />
+          <Route 
+            path="/tienda/carrito" 
+            element={<Carrito />} 
+          />
+          <Route 
+            path="/tienda/historial" 
+            element={<Historial />} 
+          />
         </Route>
 
         {/* --- ÁREA ADMINISTRATIVA (BLOQUEADA PARA JUGADORES) --- */}

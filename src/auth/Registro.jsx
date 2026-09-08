@@ -1,20 +1,17 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
 import axiosClient from "../services/axiosClient";
 import { useAuth } from "./AuthContext";
 
-export default function Login() {
+export default function Registro() {
+  const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmarPassword, setConfirmarPassword] = useState("");
   const [enviando, setEnviando] = useState(false);
 
-  const {
-    login,
-    estaAutenticado,
-  } = useAuth();
-
+  const { estaAutenticado } = useAuth();
   const navigate = useNavigate();
 
   if (estaAutenticado) {
@@ -25,35 +22,50 @@ export default function Login() {
     evento.preventDefault();
     setEnviando(true);
 
+    if (password !== confirmarPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "No se pudo registrar",
+        text: "Las contraseñas no coinciden.",
+        background: "#171a21",
+        color: "#e5e7eb",
+        confirmButtonColor: "#1a9fff",
+      });
+
+      setEnviando(false);
+      return;
+    }
+
     try {
-      const respuesta = await axiosClient.post(
-        "/api/auth/login",
+      await axiosClient.post(
+        "/api/auth/registro",
         {
+          nombre,
           correo,
           password,
         }
       );
 
-      const token = respuesta.data.token;
-      login(token);
+      Swal.fire({
+        icon: "success",
+        title: "Registro exitoso",
+        text: "Tu cuenta ha sido creada correctamente.",
+        background: "#171a21",
+        color: "#e5e7eb",
+        confirmButtonColor: "#1a9fff",
+      });
 
-      const payload = jwtDecode(token);
-
-      if (payload.rol === "JUGADOR") {
-        navigate("/tienda", { replace: true });
-      } else {
-        navigate("/", { replace: true });
-      }
+      navigate("/login", { replace: true });
     } catch (error) {
       console.error(error);
 
       const mensaje =
         error.response?.data?.message ||
-        "Correo o contraseña incorrectos";
+        "No se pudo completar el registro.";
 
       Swal.fire({
         icon: "error",
-        title: "No se pudo iniciar sesión",
+        title: "No se pudo registrar",
         text: mensaje,
         background: "#171a21",
         color: "#e5e7eb",
@@ -83,8 +95,37 @@ export default function Login() {
           </h1>
 
           <p className="text-sm text-slate-400 mt-2">
-            Plataforma de videojuegos
+            Crear cuenta
           </p>
+        </div>
+
+        <div className="mb-5">
+          <label className="block text-sm font-medium text-slate-300 mb-2">
+            Nombre completo
+          </label>
+
+          <div className="flex items-center bg-slate-800 border border-slate-700 rounded-lg px-3.5 focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/20">
+            <i className="pi pi-user text-slate-400 mr-3 text-base" />
+            <input
+              type="text"
+              value={nombre}
+              onChange={(evento) =>
+                setNombre(evento.target.value)
+              }
+              className="
+                w-full
+                bg-transparent
+                text-white
+                py-2.5
+                outline-none
+                border-none
+                text-sm
+              "
+              placeholder="Nombre completo"
+              required
+              autoFocus
+            />
+          </div>
         </div>
 
         <div className="mb-5">
@@ -111,12 +152,11 @@ export default function Login() {
               "
               placeholder="correo@ejemplo.com"
               required
-              autoFocus
             />
           </div>
         </div>
 
-        <div className="mb-7">
+        <div className="mb-5">
           <label className="block text-sm font-medium text-slate-300 mb-2">
             Contraseña
           </label>
@@ -128,6 +168,34 @@ export default function Login() {
               value={password}
               onChange={(evento) =>
                 setPassword(evento.target.value)
+              }
+              className="
+                w-full
+                bg-transparent
+                text-white
+                py-2.5
+                outline-none
+                border-none
+                text-sm
+              "
+              placeholder="••••••••"
+              required
+            />
+          </div>
+        </div>
+
+        <div className="mb-7">
+          <label className="block text-sm font-medium text-slate-300 mb-2">
+            Confirmar contraseña
+          </label>
+
+          <div className="flex items-center bg-slate-800 border border-slate-700 rounded-lg px-3.5 focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/20">
+            <i className="pi pi-lock text-slate-400 mr-3 text-base" />
+            <input
+              type="password"
+              value={confirmarPassword}
+              onChange={(evento) =>
+                setConfirmarPassword(evento.target.value)
               }
               className="
                 w-full
@@ -161,18 +229,18 @@ export default function Login() {
           "
         >
           {enviando
-            ? "Iniciando sesión..."
-            : "Iniciar sesión"}
+            ? "Creando cuenta..."
+            : "Registrarse"}
         </button>
 
         <p className="text-center text-sm text-slate-400 mt-5">
-          ¿No tienes cuenta?{" "}
+          ¿Ya tienes cuenta?{" "}
           <button
             type="button"
-            onClick={() => navigate("/registro", { replace: true })}
+            onClick={() => navigate("/login", { replace: true })}
             className="text-sky-400 hover:text-sky-300 font-medium transition-colors"
           >
-            Registrarse
+            Iniciar sesión
           </button>
         </p>
       </form>
