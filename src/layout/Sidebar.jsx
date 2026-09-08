@@ -36,13 +36,6 @@ const opcionesMenu = [
     ],
   },
 
-  
-
-  {
-    etiqueta: "Compras",
-    icono: "pi pi-shopping-cart",
-    ruta: "/compras",
-  },
 
   {
     etiqueta: "Claves de Activación",

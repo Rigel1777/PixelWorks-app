@@ -14,6 +14,7 @@ import Desarrolladores from "../components/catalogos/Desarrolladores";
 import Productos from "../components/productos/Productos";
 import Ofertas from "../components/catalogos/Ofertas";
 import Dashboard from "../components/dashboard/Dashboard";
+import ClavesActivacion from "../components/catalogos/ClavesActivacion";
 
 import TiendaLayout from "./TiendaLayout";
 import Tienda from "../components/jugadores/Tienda";
@@ -30,16 +31,8 @@ function Compras() {
   );
 }
 
-function ClavesActivacion() {
-  return (
-    <div>
-      <h2 className="text-3xl font-bold text-white">Claves de Activación</h2>
-      <p className="text-slate-400 mt-2">
-        Gestión de claves de activación.
-      </p>
-    </div>
-  );
-}
+
+
 
 function Usuarios() {
   return (
