@@ -17,6 +17,8 @@ import Dashboard from "../components/dashboard/Dashboard";
 
 import TiendaLayout from "./TiendaLayout";
 import Tienda from "../components/jugadores/Tienda";
+import Carrito from "../components/jugadores/Carrito";
+import Historial from "../components/jugadores/Historial";
 
 // --- COMPONENTES TEMPORALES ADMINISTRATIVOS ---
 function Compras() {
@@ -89,8 +91,14 @@ export default function Router() {
           }
         >
           <Route path="/tienda" element={<Tienda />} />
-          <Route path="/tienda/carrito" element={<PaginaTemporal titulo="Mi Carrito" />} />
-          <Route path="/tienda/historial" element={<PaginaTemporal titulo="Mi Biblioteca de Juegos" />} />
+          <Route 
+            path="/tienda/carrito" 
+            element={<Carrito />} 
+          />
+          <Route 
+            path="/tienda/historial" 
+            element={<Historial />} 
+          />
         </Route>
 
         {/* --- ÁREA ADMINISTRATIVA (BLOQUEADA PARA JUGADORES) --- */}
