@@ -26,47 +26,63 @@ export default function Tienda() {
   };
 
   const renderCard = (juego) => (
-    <div
-      key={juego.id}
-      className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg hover:-translate-y-1 transition-transform"
-    >
-      <div className="h-48 bg-slate-950 relative">
-        {juego.imagen ? (
-          <img src={juego.imagen} alt={juego.nombre} className="w-full h-full object-cover" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-slate-600">
-            <i className="pi pi-image text-4xl" />
-          </div>
-        )}
-        <div className="absolute top-2 right-2 bg-black/80 text-white font-bold px-3 py-1 rounded-lg backdrop-blur-sm">
-          ${Number(juego.precio).toFixed(2)}
-        </div>
-      </div>
+    <div
+      key={juego.id}
+      className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg hover:-translate-y-1 transition-transform"
+    >
+      <div className="h-48 bg-slate-950 relative">
+        {juego.imagen ? (
+          <img src={juego.imagen} alt={juego.nombre} className="w-full h-full object-cover" />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-slate-600">
+            <i className="pi pi-image text-4xl" />
+          </div>
+        )}
+        
+        {/* --- ETIQUETA DE PRECIO Y DESCUENTO --- */}
+        <div className="absolute top-2 right-2 flex flex-col items-end gap-1">
+          {juego.porcentajeDescuento > 0 && (
+            <span className="bg-red-600 text-white font-bold px-2 py-0.5 rounded-md text-xs shadow-md">
+              -{juego.porcentajeDescuento}%
+            </span>
+          )}
+          <div className="bg-black/80 text-white font-bold px-3 py-1 rounded-lg backdrop-blur-sm flex items-center gap-2 shadow-lg">
+            {juego.precioConDescuento ? (
+              <>
+                <span className="text-slate-400 line-through text-xs font-normal">${Number(juego.precio).toFixed(2)}</span>
+                <span className="text-green-400">${Number(juego.precioConDescuento).toFixed(2)}</span>
+              </>
+            ) : (
+              <span>${Number(juego.precio).toFixed(2)}</span>
+            )}
+          </div>
+        </div>
+      </div>
 
-      <div className="p-5">
-        <h3 className="text-lg font-bold text-white truncate" title={juego.nombre}>
-          {juego.nombre}
-        </h3>
-        <p className="text-sm text-slate-400 mt-1 line-clamp-2 min-h-[40px]">
-          {juego.descripcion || "Sin descripción"}
-        </p>
-        
-        <div className="mt-5 pt-4 border-t border-slate-800">
-          <Button 
-  label={(juego.stock ?? 0) <= 0 ? "Sin existencias" : "Añadir al carrito"}
-  icon={(juego.stock ?? 0) <= 0 ? "pi pi-ban" : "pi pi-shopping-cart"}
-  disabled={(juego.stock ?? 0) <= 0}
-  className={`w-full border-none transition-colors ${
-    (juego.stock ?? 0) <= 0 
-      ? "bg-slate-800 text-slate-500 cursor-not-allowed" 
-      : "bg-sky-600 hover:bg-sky-500 text-white"
-  }`}
-  onClick={() => agregarAlCarrito(juego)}
-/>
-        </div>
-      </div>
-    </div>
-  );
+      <div className="p-5">
+        <h3 className="text-lg font-bold text-white truncate" title={juego.nombre}>
+          {juego.nombre}
+        </h3>
+        <p className="text-sm text-slate-400 mt-1 line-clamp-2 min-h-[40px]">
+          {juego.descripcion || "Sin descripción"}
+        </p>
+        
+        <div className="mt-5 pt-4 border-t border-slate-800">
+          <Button 
+            label={(juego.stock ?? 0) <= 0 ? "Sin existencias" : "Añadir al carrito"}
+            icon={(juego.stock ?? 0) <= 0 ? "pi pi-ban" : "pi pi-shopping-cart"}
+            disabled={(juego.stock ?? 0) <= 0}
+            className={`w-full border-none transition-colors ${
+              (juego.stock ?? 0) <= 0 
+                ? "bg-slate-800 text-slate-500 cursor-not-allowed" 
+                : "bg-sky-600 hover:bg-sky-500 text-white"
+            }`}
+            onClick={() => agregarAlCarrito(juego)}
+          />
+        </div>
+      </div>
+    </div>
+  );
 
   if (loading) {
     return (

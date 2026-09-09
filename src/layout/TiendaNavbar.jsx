@@ -14,6 +14,7 @@ export default function TiendaNavbar() {
         <div className="hidden md:flex gap-6 text-sm font-medium text-slate-300">
           <Link to="/tienda" className="hover:text-white transition-colors">Catálogo</Link>
           <Link to="/tienda/historial" className="hover:text-white transition-colors">Mi Biblioteca</Link>
+          <Link to="/tienda/ofertas" className="hover:text-white transition-colors">Ofertas</Link>
         </div>
       </div>
 

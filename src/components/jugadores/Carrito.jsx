@@ -12,7 +12,6 @@ export default function Carrito() {
   const [metodoSeleccionado, setMetodoSeleccionado] = useState("");
   const navigate = useNavigate();
 
-  // Cargar métodos de pago reales
   useEffect(() => {
     axiosClient.get("/api/metodos-pago")
       .then(res => {
@@ -49,7 +48,6 @@ export default function Carrito() {
       
       navigate("/tienda/historial");
     } catch (error) {
-      // Extracción profunda del error de Spring Boot para no mostrar alertas genéricas
       const mensajeBackend = error.response?.data?.message 
         || error.response?.data?.error 
         || (typeof error.response?.data === 'string' ? error.response.data : null)
@@ -73,7 +71,7 @@ export default function Carrito() {
       <div className="max-w-3xl mx-auto text-center py-20">
         <i className="pi pi-shopping-cart text-6xl text-slate-600 mb-6" />
         <h2 className="text-3xl font-bold text-white mb-4">Tu carrito está vacío</h2>
-        <p className="text-slate-400 mb-8">Parece que aún no has agregado juegos a tu lista.</p>
+        <p className="text-slate-400 mb-8">Parece que aún no has agregado aventuras a tu lista.</p>
         <Link to="/tienda">
           <Button label="Ir al catálogo" icon="pi pi-arrow-left" className="bg-sky-600 hover:bg-sky-500 border-none" />
         </Link>
@@ -106,9 +104,23 @@ export default function Carrito() {
                 <h3 className="text-lg font-bold text-white truncate" title={juego.nombre}>{juego.nombre}</h3>
                 
                 <div className="flex items-center justify-center sm:justify-start gap-4 mt-3">
-                  <p className="text-sky-400 font-bold text-lg">${Number(juego.precio).toFixed(2)}</p>
+                  <div className="flex flex-col items-center sm:items-start leading-tight">
+                    {juego.precioConDescuento ? (
+                      <>
+                        <span className="text-slate-500 line-through text-xs font-semibold">${Number(juego.precio).toFixed(2)}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-400 font-bold text-lg">${Number(juego.precioConDescuento).toFixed(2)}</span>
+                          <span className="bg-red-600/20 text-red-400 text-[10px] font-bold px-1.5 py-0.5 rounded">
+                            -{juego.porcentajeDescuento}%
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <span className="text-sky-400 font-bold text-lg">${Number(juego.precio).toFixed(2)}</span>
+                    )}
+                  </div>
                   
-                  <div className="flex items-center bg-slate-950 rounded-lg border border-slate-700 h-8">
+                  <div className="flex items-center bg-slate-950 rounded-lg border border-slate-700 h-8 ml-auto sm:ml-0">
                     <button 
                       onClick={() => actualizarCantidad(juego.id, (juego.cantidad || 1) - 1)}
                       className="px-3 h-full text-slate-400 hover:text-white hover:bg-slate-800 rounded-l-lg transition-colors flex items-center justify-center"
@@ -122,7 +134,7 @@ export default function Carrito() {
                     <button 
                       onClick={() => actualizarCantidad(juego.id, (juego.cantidad || 1) + 1)}
                       className="px-3 h-full text-slate-400 hover:text-white hover:bg-slate-800 rounded-r-lg transition-colors flex items-center justify-center"
-                      disabled={(juego.cantidad || 1) >= juego.stock} 
+                      disabled={(juego.cantidad || 1) >= (juego.stock ?? 0)} 
                     >
                       <i className="pi pi-plus text-[10px]" />
                     </button>

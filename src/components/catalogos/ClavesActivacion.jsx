@@ -160,20 +160,24 @@ export default function ClavesActivacion() {
   };
 
   // =========================================================
-  // CAMBIO DE CÓDIGO
+  // CAMBIO DE CÓDIGO (AUTO-FORMATO CON GUIONES)
   // =========================================================
 
-  const manejarCambioCodigo = (
-    valor
-  ) => {
-    const valorNormalizado =
-      valor
-        .toUpperCase()
-        .replace(/\s/g, "");
+  const manejarCambioCodigo = (valor) => {
+
+    const limpio = valor.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+
+    let formateado = "";
+    for (let i = 0; i < limpio.length && i < 12; i++) {
+      if (i > 0 && i % 4 === 0) {
+        formateado += "-";
+      }
+      formateado += limpio[i];
+    }
 
     setClave((actual) => ({
       ...actual,
-      codigo: valorNormalizado,
+      codigo: formateado,
     }));
   };
 
@@ -591,7 +595,7 @@ export default function ClavesActivacion() {
                       )
                     }
 
-                    maxLength={17}
+                    maxLength={14} // 12 caracteres + 2 guiones
 
                     disabled={
                       guardando

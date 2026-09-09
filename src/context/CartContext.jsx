@@ -93,7 +93,10 @@ export function CartProvider({ children }) {
   };
 
   // Cálculo del precio total multiplicando precio por cantidad de cada ítem
-  const total = carrito.reduce((suma, item) => suma + (Number(item.precio) * item.cantidad), 0);
+  const total = carrito.reduce((suma, item) => {
+    const precioFinal = item.precioConDescuento ?? item.precio;
+    return suma + (Number(precioFinal) * item.cantidad);
+  }, 0);
 
   return (
     <CartContext.Provider

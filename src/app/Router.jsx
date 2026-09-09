@@ -15,16 +15,14 @@ import Desarrolladores from "../components/catalogos/Desarrolladores";
 import Productos from "../components/productos/Productos";
 import Ofertas from "../components/catalogos/Ofertas";
 import Dashboard from "../components/dashboard/Dashboard";
-<<<<<<< HEAD
 import ClavesActivacion from "../components/catalogos/ClavesActivacion";
-=======
 import Reportes from "../components/reportes/Reportes";
->>>>>>> d742fe184d2bc5edc3dafab7b16ed2fa14166e91
 
 import TiendaLayout from "./TiendaLayout";
 import Tienda from "../components/jugadores/Tienda";
 import Carrito from "../components/jugadores/Carrito";
 import Historial from "../components/jugadores/Historial";
+import OfertasTienda from "../components/jugadores/OfertasTienda";
 
 // --- COMPONENTES TEMPORALES ADMINISTRATIVOS ---
 function Compras() {
@@ -37,9 +35,6 @@ function Compras() {
     </div>
   );
 }
-
-
-
 
 function Usuarios() {
   return (
@@ -87,6 +82,8 @@ export default function Router() {
             path="/tienda/historial" 
             element={<Historial />} 
           />
+          <Route path="/tienda/ofertas"
+           element={<OfertasTienda />} />
         </Route>
 
         {/* --- ÁREA ADMINISTRATIVA (BLOQUEADA PARA JUGADORES) --- */}
