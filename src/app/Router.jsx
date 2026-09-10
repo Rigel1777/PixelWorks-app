@@ -89,7 +89,7 @@ export default function Router() {
         {/* --- ÁREA ADMINISTRATIVA (BLOQUEADA PARA JUGADORES) --- */}
         <Route
           element={
-            <RutaProtegida rolesPermisos={["ADMIN", "DESARROLLADOR"]}>
+            <RutaProtegida rolesPermisos={["ADMIN"]}>
               <AppLayout />
             </RutaProtegida>
           }
