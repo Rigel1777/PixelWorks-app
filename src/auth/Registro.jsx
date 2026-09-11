@@ -38,7 +38,7 @@ export default function Registro() {
 
     try {
       await axiosClient.post(
-        "/api/auth/registro",
+        "/api/auth/register",
         {
           nombre,
           correo,
