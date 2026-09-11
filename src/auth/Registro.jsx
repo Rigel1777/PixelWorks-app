@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axiosClient from "../services/axiosClient";
 import { useAuth } from "./AuthContext";
+import { Link } from "react-router-dom";
 
 export default function Registro() {
   const [nombre, setNombre] = useState("");
@@ -18,10 +19,27 @@ export default function Registro() {
     return <Navigate to="/tienda" replace />;
   }
 
-  const manejarEnvio = async (evento) => {
+  const NOMBRE_REGEX = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s_-]+$/;
+
+const manejarEnvio = async (evento) => {
     evento.preventDefault();
     setEnviando(true);
 
+    // 1. Validar el formato del nombre
+    if (!NOMBRE_REGEX.test(nombre.trim())) {
+      Swal.fire({
+        icon: "error",
+        title: "Nombre inválido",
+        text: "El nombre solo puede contener letras, espacios y guiones.",
+        background: "#171a21",
+        color: "#e5e7eb",
+        confirmButtonColor: "#1a9fff",
+      });
+      setEnviando(false);
+      return;
+    }
+
+    // 2. Validar que las contraseñas coincidan
     if (password !== confirmarPassword) {
       Swal.fire({
         icon: "error",
@@ -31,25 +49,21 @@ export default function Registro() {
         color: "#e5e7eb",
         confirmButtonColor: "#1a9fff",
       });
-
       setEnviando(false);
       return;
     }
 
     try {
-      await axiosClient.post(
-        "/api/auth/register",
-        {
-          nombre,
-          correo,
-          password,
-        }
-      );
+      await axiosClient.post("/api/auth/register", {
+        nombre: nombre.trim(),
+        correo: correo.trim(),
+        password,
+      });
 
       Swal.fire({
         icon: "success",
         title: "Registro exitoso",
-        text: "Tu cuenta ha sido creada correctamente.",
+        text: "Inicia Sesión para continuar",
         background: "#171a21",
         color: "#e5e7eb",
         confirmButtonColor: "#1a9fff",
@@ -58,10 +72,7 @@ export default function Registro() {
       navigate("/login", { replace: true });
     } catch (error) {
       console.error(error);
-
-      const mensaje =
-        error.response?.data?.message ||
-        "No se pudo completar el registro.";
+      const mensaje = error.response?.data?.message || "No se pudo completar el registro.";
 
       Swal.fire({
         icon: "error",
@@ -243,6 +254,15 @@ export default function Registro() {
             Iniciar sesión
           </button>
         </p>
+        <div className="mt-6 text-center">
+        <Link 
+          to="/tienda" 
+          className="text-slate-400 hover:text-sky-400 transition-colors text-sm flex items-center justify-center gap-2"
+        >
+          <i className="pi pi-arrow-left text-xs" />
+          Volver al catálogo de juegos
+        </Link>
+      </div>
       </form>
     </div>
   );

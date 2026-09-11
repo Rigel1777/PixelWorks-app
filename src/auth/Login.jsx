@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
 import axiosClient from "../services/axiosClient";
 import { useAuth } from "./AuthContext";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [correo, setCorreo] = useState("");
@@ -175,6 +176,15 @@ export default function Login() {
             Registrarse
           </button>
         </p>
+        <div className="mt-6 text-center">
+        <Link 
+          to="/tienda" 
+          className="text-slate-400 hover:text-sky-400 transition-colors text-sm flex items-center justify-center gap-2"
+        >
+          <i className="pi pi-arrow-left text-xs" />
+          Volver al catálogo de juegos
+        </Link>
+      </div>
       </form>
     </div>
   );

@@ -1,9 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import AppLayout from "./AppLayout";
 import Login from "../auth/Login";
@@ -23,39 +18,10 @@ import Tienda from "../components/jugadores/Tienda";
 import Carrito from "../components/jugadores/Carrito";
 import Historial from "../components/jugadores/Historial";
 import OfertasTienda from "../components/jugadores/OfertasTienda";
+import DetalleJuego from "../components/jugadores/DetalleJuego";
 
-// --- COMPONENTES TEMPORALES ADMINISTRATIVOS ---
-function Compras() {
-  return (
-    <div>
-      <h2 className="text-3xl font-bold text-white">Compras</h2>
-      <p className="text-slate-400 mt-2">
-        Módulo de compras en construcción.
-      </p>
-    </div>
-  );
-}
-
-function Usuarios() {
-  return (
-    <div>
-      <h2 className="text-3xl font-bold text-white">Usuarios</h2>
-      <p className="text-slate-400 mt-2">
-        Gestión de usuarios en construcción.
-      </p>
-    </div>
-  );
-}
-
-// --- PLANTILLA PARA RUTAS EN CONSTRUCCIÓN ---
-function PaginaTemporal({ titulo }) {
-  return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold text-white">{titulo}</h2>
-      <p className="text-slate-400 mt-2">Módulo en construcción.</p>
-    </div>
-  );
-}
+function Compras() { return ( <div> <h2 className="text-3xl font-bold text-white">Compras</h2> <p className="text-slate-400 mt-2"> Módulo de compras en construcción. </p> </div> ); }
+function Usuarios() { return ( <div> <h2 className="text-3xl font-bold text-white">Usuarios</h2> <p className="text-slate-400 mt-2"> Gestión de usuarios en construcción. </p> </div> ); }
 
 export default function Router() {
   return (
@@ -64,27 +30,26 @@ export default function Router() {
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
 
-        {/* --- ÁREA DEL JUGADOR (TIENDA) --- */}
-        <Route
-          path="/"
-          element={
-            <RutaProtegida rolesPermisos={["JUGADOR"]}>
-              <TiendaLayout />
-            </RutaProtegida>
-          }
-        >
-          <Route path="/tienda" element={<Tienda />} />
+        {/* --- ÁREA DE LA TIENDA (PÚBLICA Y PRIVADA) --- */}
+        <Route path="/tienda" element={<TiendaLayout />}>
+          
+          {/* Accesibles sin cuenta */}
+          <Route index element={<Tienda />} />
+          <Route path="ofertas" element={<OfertasTienda />} />
+          <Route path="juego/:id" element={<DetalleJuego />} />
+
+          {/* Bloqueadas (Requieren login de JUGADOR) */}
           <Route 
-            path="/tienda/carrito" 
-            element={<Carrito />} 
+            path="carrito" 
+            element={ <RutaProtegida rolesPermisos={["JUGADOR"]}><Carrito /></RutaProtegida> } 
           />
           <Route 
-            path="/tienda/historial" 
-            element={<Historial />} 
+            path="historial" 
+            element={ <RutaProtegida rolesPermisos={["JUGADOR"]}><Historial /></RutaProtegida> } 
           />
-          <Route path="/tienda/ofertas"
-           element={<OfertasTienda />} />
         </Route>
+
+        <Route path="/" element={<Navigate to="/tienda" replace />} />
 
         {/* --- ÁREA ADMINISTRATIVA (BLOQUEADA PARA JUGADORES) --- */}
         <Route
