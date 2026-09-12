@@ -1,6 +1,12 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import AppLayout from "./AppLayout";
+
 import Login from "../auth/Login";
 import Registro from "../auth/Registro";
 import RutaProtegida from "../auth/RutaProtegida";
@@ -20,74 +26,181 @@ import Historial from "../components/jugadores/Historial";
 import OfertasTienda from "../components/jugadores/OfertasTienda";
 import DetalleJuego from "../components/jugadores/DetalleJuego";
 
-function Compras() { return ( <div> <h2 className="text-3xl font-bold text-white">Compras</h2> <p className="text-slate-400 mt-2"> Módulo de compras en construcción. </p> </div> ); }
-function Usuarios() { return ( <div> <h2 className="text-3xl font-bold text-white">Usuarios</h2> <p className="text-slate-400 mt-2"> Gestión de usuarios en construcción. </p> </div> ); }
+function Compras() {
+  return (
+    <div>
+      <h2 className="text-3xl font-bold text-white">
+        Compras
+      </h2>
+
+      <p className="text-slate-400 mt-2">
+        Módulo de compras en construcción.
+      </p>
+    </div>
+  );
+}
+
+function Usuarios() {
+  return (
+    <div>
+      <h2 className="text-3xl font-bold text-white">
+        Usuarios
+      </h2>
+
+      <p className="text-slate-400 mt-2">
+        Gestión de usuarios en construcción.
+      </p>
+    </div>
+  );
+}
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/registro" element={<Registro />} />
 
-        {/* --- ÁREA DE LA TIENDA (PÚBLICA Y PRIVADA) --- */}
-        <Route path="/tienda" element={<TiendaLayout />}>
-          
-          {/* Accesibles sin cuenta */}
-          <Route index element={<Tienda />} />
-          <Route path="ofertas" element={<OfertasTienda />} />
-          <Route path="juego/:id" element={<DetalleJuego />} />
+        {/* =====================================================
+            AUTENTICACIÓN
+        ===================================================== */}
 
-          {/* Bloqueadas (Requieren login de JUGADOR) */}
-          <Route 
-            path="carrito" 
-            element={ <RutaProtegida rolesPermisos={["JUGADOR"]}><Carrito /></RutaProtegida> } 
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/registro"
+          element={<Registro />}
+        />
+
+
+        {/* =====================================================
+            TIENDA
+            PÚBLICA
+        ===================================================== */}
+
+        <Route
+          path="/tienda"
+          element={<TiendaLayout />}
+        >
+          <Route
+            index
+            element={<Tienda />}
           />
-          <Route 
-            path="historial" 
-            element={ <RutaProtegida rolesPermisos={["JUGADOR"]}><Historial /></RutaProtegida> } 
+
+          <Route
+            path="ofertas"
+            element={<OfertasTienda />}
+          />
+
+          <Route
+            path="juego/:id"
+            element={<DetalleJuego />}
+          />
+
+          {/* JUGADOR */}
+
+          <Route
+            path="carrito"
+            element={
+              <RutaProtegida
+                rolesPermisos={["JUGADOR"]}
+              >
+                <Carrito />
+              </RutaProtegida>
+            }
+          />
+
+          <Route
+            path="historial"
+            element={
+              <RutaProtegida
+                rolesPermisos={["JUGADOR"]}
+              >
+                <Historial />
+              </RutaProtegida>
+            }
           />
         </Route>
 
-        <Route path="/" element={<Navigate to="/tienda" replace />} />
 
-        {/* --- ÁREA ADMINISTRATIVA (BLOQUEADA PARA JUGADORES) --- */}
+        {/* =====================================================
+            ÁREA ADMINISTRATIVA
+            LA RUTA "/" ES EL DASHBOARD
+        ===================================================== */}
+
         <Route
           element={
-            <RutaProtegida rolesPermisos={["ADMIN"]}>
+            <RutaProtegida
+              rolesPermisos={["ADMIN"]}
+            >
               <AppLayout />
             </RutaProtegida>
           }
         >
-          {/* DASHBOARD — SOLO ADMIN */}
+          {/* "/" → Dashboard */}
+
           <Route
             index
-            element={
-              <RutaProtegida rolesPermisos={["ADMIN"]}>
-                <Dashboard />
-              </RutaProtegida>
-            }
+            element={<Dashboard />}
           />
 
-          <Route path="juegos" element={<Productos />} />
-          <Route path="catalogos/categorias" element={<Categorias />} />
-          <Route path="catalogos/desarrolladores" element={<Desarrolladores />} />
-          <Route path="catalogos/ofertas" element={<Ofertas />} />
-          <Route path="compras" element={<Compras />} />
-          <Route path="claves-activacion" element={<ClavesActivacion />} />
-          
+          <Route
+            path="juegos"
+            element={<Productos />}
+          />
+
+          <Route
+            path="catalogos/categorias"
+            element={<Categorias />}
+          />
+
+          <Route
+            path="catalogos/desarrolladores"
+            element={<Desarrolladores />}
+          />
+
+          <Route
+            path="catalogos/ofertas"
+            element={<Ofertas />}
+          />
+
+          <Route
+            path="compras"
+            element={<Compras />}
+          />
+
+          <Route
+            path="claves-activacion"
+            element={<ClavesActivacion />}
+          />
+
           <Route
             path="usuarios"
-            element={
-              <RutaProtegida rolesPermisos={["ADMIN"]}>
-                <Usuarios />
-              </RutaProtegida>
-            }
+            element={<Usuarios />}
           />
-          <Route path="reportes" element={<Reportes />} />
+
+          <Route
+            path="reportes"
+            element={<Reportes />}
+          />
         </Route>
 
-        <Route path="*" element={<Navigate to="/tienda" replace />} />
+
+        {/* =====================================================
+            RUTA NO ENCONTRADA
+        ===================================================== */}
+
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to="/tienda"
+              replace
+            />
+          }
+        />
+
       </Routes>
     </BrowserRouter>
   );

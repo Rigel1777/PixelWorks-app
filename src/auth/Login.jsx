@@ -14,12 +14,23 @@ export default function Login() {
   const {
     login,
     estaAutenticado,
+    usuario,
   } = useAuth();
 
   const navigate = useNavigate();
 
+  /*
+   * Si ya existe una sesión, redirigimos según el rol.
+   * ADMIN → Dashboard
+   * JUGADOR → Tienda
+   */
   if (estaAutenticado) {
-    return <Navigate to="/tienda" replace />;
+    const destino =
+      usuario?.rol === "JUGADOR"
+        ? "/tienda"
+        : "/";
+
+    return <Navigate to={destino} replace />;
   }
 
   const manejarEnvio = async (evento) => {
@@ -36,15 +47,28 @@ export default function Login() {
       );
 
       const token = respuesta.data.token;
+
+      /*
+       * Guardamos la sesión mediante AuthContext.
+       */
       login(token);
 
+      /*
+       * El JWT ya contiene el rol real enviado
+       * por el backend.
+       */
       const payload = jwtDecode(token);
 
       if (payload.rol === "JUGADOR") {
-        navigate("/tienda", { replace: true });
+        navigate("/tienda", {
+          replace: true,
+        });
       } else {
-        navigate("/", { replace: true });
+        navigate("/", {
+          replace: true,
+        });
       }
+
     } catch (error) {
       console.error(error);
 
@@ -60,6 +84,7 @@ export default function Login() {
         color: "#e5e7eb",
         confirmButtonColor: "#1a9fff",
       });
+
     } finally {
       setEnviando(false);
     }
@@ -95,6 +120,7 @@ export default function Login() {
 
           <div className="flex items-center bg-slate-800 border border-slate-700 rounded-lg px-3.5 focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/20">
             <i className="pi pi-envelope text-slate-400 mr-3 text-base" />
+
             <input
               type="email"
               value={correo}
@@ -124,6 +150,7 @@ export default function Login() {
 
           <div className="flex items-center bg-slate-800 border border-slate-700 rounded-lg px-3.5 focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/20">
             <i className="pi pi-lock text-slate-400 mr-3 text-base" />
+
             <input
               type="password"
               value={password}
@@ -168,23 +195,43 @@ export default function Login() {
 
         <p className="text-center text-sm text-slate-400 mt-5">
           ¿No tienes cuenta?{" "}
+
           <button
             type="button"
-            onClick={() => navigate("/registro", { replace: true })}
-            className="text-sky-400 hover:text-sky-300 font-medium transition-colors"
+            onClick={() =>
+              navigate("/registro", {
+                replace: true,
+              })
+            }
+            className="
+              text-sky-400
+              hover:text-sky-300
+              font-medium
+              transition-colors
+            "
           >
             Registrarse
           </button>
         </p>
+
         <div className="mt-6 text-center">
-        <Link 
-          to="/tienda" 
-          className="text-slate-400 hover:text-sky-400 transition-colors text-sm flex items-center justify-center gap-2"
-        >
-          <i className="pi pi-arrow-left text-xs" />
-          Volver al catálogo de juegos
-        </Link>
-      </div>
+          <Link
+            to="/tienda"
+            className="
+              text-slate-400
+              hover:text-sky-400
+              transition-colors
+              text-sm
+              flex
+              items-center
+              justify-center
+              gap-2
+            "
+          >
+            <i className="pi pi-arrow-left text-xs" />
+            Volver al catálogo de juegos
+          </Link>
+        </div>
       </form>
     </div>
   );
