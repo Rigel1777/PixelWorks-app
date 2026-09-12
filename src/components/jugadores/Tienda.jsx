@@ -187,6 +187,27 @@ export default function Tienda() {
             {juego.desarrolladorNombre || "Independiente"}
           </span>
         </div>
+        <div className="flex items-center gap-2 mt-3">
+      <i
+        className={`pi ${
+          (juego.stock ?? 0) > 0
+            ? "pi-key text-green-400"
+            : "pi-ban text-red-400"
+        } text-sm`}
+      />
+
+      <span
+        className={`text-xs font-semibold ${
+          (juego.stock ?? 0) > 0
+            ? "text-green-400"
+            : "text-red-400"
+        }`}
+      >
+        {(juego.stock ?? 0) > 0
+          ? `${juego.stock} claves disponibles`
+          : "Sin claves disponibles"}
+      </span>
+    </div>
 
         <p className="text-sm text-slate-500 mt-3 line-clamp-2 min-h-[40px]">{juego.descripcion || "Sin descripción"}</p>
         
