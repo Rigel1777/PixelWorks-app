@@ -13,7 +13,6 @@ export default function Carrito() {
   const [metodoSeleccionado, setMetodoSeleccionado] = useState("");
   const navigate = useNavigate();
 
-  // Variables de estado visual para los formularios
   const [datosTarjeta, setDatosTarjeta] = useState({ numero: "", fecha: "", cvv: "", titular: "" });
   const [paypalEmail, setPaypalEmail] = useState("");
 
@@ -26,8 +25,26 @@ export default function Carrito() {
       .catch(err => console.error("Fallo al cargar métodos de pago", err));
   }, []);
 
+  const manejarCambioTitular = (e) => {
+    const valorLimpio = e.target.value.replace(/[^a-zA-Z]/g, '');
+    setDatosTarjeta({ ...datosTarjeta, titular: valorLimpio });
+};
+
+  const manejarCambioFecha = (e) => {
+    let valor = e.target.value.replace(/\D/g, ""); 
+    if (valor.length >= 3) {
+      valor = valor.substring(0, 2) + "/" + valor.substring(2, 4);
+    }
+    setDatosTarjeta({ ...datosTarjeta, fecha: valor });
+  };
+
+  const manejarCambioNumero = (e) => {
+    let valor = e.target.value.replace(/\D/g, "");
+    valor = valor.replace(/(.{4})/g, "$1 ").trim();
+    setDatosTarjeta({ ...datosTarjeta, numero: valor });
+  };
+
   const procesarCompra = async () => {
-    // Validación visual antes de enviar al backend
     if (carrito.length === 0 || !metodoSeleccionado) return;
     
     const metodoActual = metodosPago.find(m => m.id === Number(metodoSeleccionado))?.nombre.toLowerCase() || "";
@@ -76,7 +93,6 @@ export default function Carrito() {
     );
   }
 
-  // Determinar el nombre del método seleccionado para renderizar los campos
   const metodoSeleccionadoObj = metodosPago.find(m => m.id === Number(metodoSeleccionado));
   const nombreMetodo = metodoSeleccionadoObj ? metodoSeleccionadoObj.nombre.toLowerCase() : "";
 
@@ -89,7 +105,6 @@ export default function Carrito() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* LISTA DE JUEGOS */}
         <div className="lg:col-span-2 space-y-4">
           {carrito.map((juego) => (
             <div key={juego.id} className="flex flex-col sm:flex-row gap-5 p-4 bg-slate-900 border border-slate-800 rounded-2xl items-center shadow-lg hover:border-sky-900/50 transition-colors">
@@ -134,7 +149,6 @@ export default function Carrito() {
           </div>
         </div>
 
-        {/* RESUMEN Y PAGO */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 h-fit sticky top-24 shadow-xl">
           <h2 className="text-xl font-bold text-white mb-6 border-b border-slate-800 pb-4">Resumen del Pedido</h2>
           
@@ -143,7 +157,6 @@ export default function Carrito() {
             <span className="font-bold text-white">${total.toFixed(2)}</span>
           </div>
           
-          {/* Selector de Pago */}
           <div className="flex flex-col mt-6 mb-2">
             <span className="text-slate-300 font-semibold mb-2 text-sm">Método de pago</span>
             <select 
@@ -162,12 +175,17 @@ export default function Carrito() {
             {nombreMetodo.includes("debito") || nombreMetodo.includes("credito") ? (
               <div className="mt-4 p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-3 shadow-inner">
                 <div className="flex items-center gap-2 mb-2 text-slate-400 text-sm"><i className="pi pi-credit-card"></i> Datos de Tarjeta</div>
-                <InputText placeholder="0000 0000 0000 0000" className="w-full bg-slate-900 border-slate-700 text-white rounded-lg px-3 py-2" value={datosTarjeta.numero} onChange={(e) => setDatosTarjeta({...datosTarjeta, numero: e.target.value})} maxLength={19} />
+                <InputText placeholder="0000 0000 0000 0000" className="w-full bg-slate-900 border-slate-700 text-white rounded-lg px-3 py-2" value={datosTarjeta.numero} onChange={manejarCambioNumero} maxLength={19} />
                 <div className="flex gap-3">
-                  <InputText placeholder="MM/YY" className="w-1/2 bg-slate-900 border-slate-700 text-white rounded-lg px-3 py-2" value={datosTarjeta.fecha} onChange={(e) => setDatosTarjeta({...datosTarjeta, fecha: e.target.value})} maxLength={5} />
+                  <InputText placeholder="MM/YY" className="w-1/2 bg-slate-900 border-slate-700 text-white rounded-lg px-3 py-2" value={datosTarjeta.fecha} onChange={manejarCambioFecha} maxLength={5} />
                   <InputText placeholder="CVV" className="w-1/2 bg-slate-900 border-slate-700 text-white rounded-lg px-3 py-2" value={datosTarjeta.cvv} onChange={(e) => setDatosTarjeta({...datosTarjeta, cvv: e.target.value})} maxLength={4} type="password" />
                 </div>
-                <InputText placeholder="Nombre en la tarjeta" className="w-full bg-slate-900 border-slate-700 text-white rounded-lg px-3 py-2 uppercase" value={datosTarjeta.titular} onChange={(e) => setDatosTarjeta({...datosTarjeta, titular: e.target.value})} />
+                <InputText placeholder="Nombre en la tarjeta" 
+                className="w-full bg-slate-900 border-slate-700 text-white rounded-lg px-3 py-2 uppercase" 
+                value={datosTarjeta.titular} 
+                onChange={manejarCambioTitular} 
+                maxLength={50} 
+/>                
               </div>
             ) : nombreMetodo.includes("paypal") ? (
               <div className="mt-4 p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-3 shadow-inner">
