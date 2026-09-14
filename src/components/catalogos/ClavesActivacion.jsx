@@ -23,22 +23,18 @@ export default function ClavesActivacion() {
 
   const { tienePermiso } = useAuth();
 
-  const puedeAgregar =
-    tienePermiso([
-      "ADMIN",
-      "DESARROLLADOR",
-    ]);
+  const puedeAgregar = tienePermiso([
+    "ADMIN",
+    "DESARROLLADOR",
+  ]);
 
-  const [productos, setProductos] =
-    useState([]);
+  const [productos, setProductos] = useState([]);
 
-  const [clave, setClave] =
-    useState({
-      ...CLAVE_VACIA,
-    });
+  const [clave, setClave] = useState({
+    ...CLAVE_VACIA,
+  });
 
-  const [stock, setStock] =
-    useState(null);
+  const [stock, setStock] = useState(null);
 
   const [loadingProductos, setLoadingProductos] =
     useState(true);
@@ -160,18 +156,26 @@ export default function ClavesActivacion() {
   };
 
   // =========================================================
-  // CAMBIO DE CÓDIGO (AUTO-FORMATO CON GUIONES)
+  // CAMBIO DE CÓDIGO
+  // AUTO-FORMATO CON GUIONES
   // =========================================================
 
   const manejarCambioCodigo = (valor) => {
-
-    const limpio = valor.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+    const limpio = valor
+      .replace(/[^a-zA-Z0-9]/g, "")
+      .toUpperCase();
 
     let formateado = "";
-    for (let i = 0; i < limpio.length && i < 12; i++) {
+
+    for (
+      let i = 0;
+      i < limpio.length && i < 12;
+      i++
+    ) {
       if (i > 0 && i % 4 === 0) {
         formateado += "-";
       }
+
       formateado += limpio[i];
     }
 
@@ -268,7 +272,7 @@ export default function ClavesActivacion() {
         );
       }
 
-      // Limpiar únicamente el código.
+      // Limpiar únicamente el código
       setClave((actual) => ({
         ...actual,
         codigo: "",
@@ -309,7 +313,6 @@ export default function ClavesActivacion() {
 
   return (
     <div className="p-2 md:p-4">
-
       <Toast ref={toast} />
 
       <div
@@ -322,7 +325,6 @@ export default function ClavesActivacion() {
           shadow-xl
         "
       >
-
         {/* ===================================================
             CABECERA
         ==================================================== */}
@@ -335,7 +337,6 @@ export default function ClavesActivacion() {
             border-slate-700
           "
         >
-
           <h2
             className="
               m-0
@@ -358,7 +359,6 @@ export default function ClavesActivacion() {
             Administra el inventario de
             claves de activación de PixelWorks.
           </p>
-
         </div>
 
         {/* ===================================================
@@ -379,13 +379,11 @@ export default function ClavesActivacion() {
               gap-5
             "
           >
-
             {/* =================================================
                 JUEGO
             ================================================== */}
 
             <div>
-
               <label
                 htmlFor="producto"
                 className="
@@ -400,41 +398,41 @@ export default function ClavesActivacion() {
 
               <Dropdown
                 id="producto"
-
                 value={
                   clave.productoId
                 }
-
                 options={productos}
-
                 optionLabel="nombre"
-
                 optionValue="id"
-
                 placeholder={
                   loadingProductos
                     ? "Cargando juegos..."
                     : "Seleccione un juego"
                 }
-
                 disabled={
                   loadingProductos ||
                   guardando
                 }
-
                 onChange={(e) =>
                   manejarCambioProducto(
                     e.value
                   )
                 }
-
+                filter
+                filterPlaceholder="Buscar juego..."
+                showClear
                 className="
                   w-full
+                  bg-slate-900
+                  border-slate-700
+                  text-white
                 "
-
-                filter
-
-                showClear
+                panelClassName="
+                  bg-slate-900
+                  border
+                  border-slate-700
+                  text-white
+                "
               />
 
               {submitted &&
@@ -450,7 +448,6 @@ export default function ClavesActivacion() {
                     un juego.
                   </small>
                 )}
-
             </div>
 
             {/* =================================================
@@ -458,7 +455,6 @@ export default function ClavesActivacion() {
             ================================================== */}
 
             <div>
-
               <label
                 className="
                   block
@@ -472,18 +468,17 @@ export default function ClavesActivacion() {
 
               <div
                 className="
-                  h-[42px]
+                  min-h-[48px]
                   flex
                   items-center
                   gap-3
                   px-4
-                  rounded-md
+                  rounded-xl
                   bg-slate-900
                   border
                   border-slate-700
                 "
               >
-
                 {loadingStock ? (
                   <i
                     className="
@@ -518,17 +513,15 @@ export default function ClavesActivacion() {
                   className="
                     text-slate-400
                     text-sm
+                    truncate
                   "
                 >
                   {productoSeleccionado
                     ? productoSeleccionado.nombre
                     : "Seleccione un juego"}
                 </span>
-
               </div>
-
             </div>
-
           </div>
 
           {/* =================================================
@@ -544,7 +537,6 @@ export default function ClavesActivacion() {
                 border-slate-700
               "
             >
-
               <h3
                 className="
                   text-lg
@@ -561,15 +553,20 @@ export default function ClavesActivacion() {
                   flex
                   flex-col
                   md:flex-row
+                  md:items-start
                   gap-3
-                  md:items-end
                 "
               >
+                {/* =================================================
+                    CAMPO DE CÓDIGO
+                ================================================== */}
 
-                {/* CÓDIGO */}
-
-                <div className="flex-1">
-
+                <div
+                  className="
+                    w-full
+                    md:w-[49rem]
+                  "
+                >
                   <label
                     htmlFor="codigo"
                     className="
@@ -584,35 +581,28 @@ export default function ClavesActivacion() {
 
                   <InputText
                     id="codigo"
-
                     value={
                       clave.codigo
                     }
-
                     onChange={(e) =>
                       manejarCambioCodigo(
                         e.target.value
                       )
                     }
-
-                    maxLength={14} // 12 caracteres + 2 guiones
-
+                    maxLength={14}
                     disabled={
                       guardando
                     }
-
-                    placeholder="
-                      Ej. ABCD-1234-EFGH
-                    "
-
+                    placeholder="Ej. ABCD-1234-EFGH"
                     className="
                       w-full
+                      h-[42px]
                       bg-slate-900
                       border-slate-700
                       text-white
+                      placeholder:text-slate-500
                       uppercase
                     "
-
                     invalid={
                       submitted &&
                       !CODIGO_REGEX.test(
@@ -631,53 +621,56 @@ export default function ClavesActivacion() {
                     Formato: AAAA-1111-BBBB
                   </small>
 
+                  {submitted &&
+                    !clave.codigo.trim() && (
+                      <small
+                        className="
+                          p-error
+                          block
+                          mt-1
+                        "
+                      >
+                        El código de
+                        activación es obligatorio.
+                      </small>
+                    )}
                 </div>
 
-                {/* BOTÓN */}
+                {/* =================================================
+                    BOTÓN
+                ================================================== */}
 
-                <Button
-                  label="Agregar clave"
-                  icon="pi pi-plus"
-                  loading={
-                    guardando
-                  }
-
-                  disabled={
-                    !puedeAgregar ||
-                    !clave.productoId
-                  }
-
-                  onClick={
-                    guardar
-                  }
-
+                <div
                   className="
-                    w-full
-                    md:w-auto
-                    bg-sky-600
-                    border-sky-600
-                    text-white
-                    hover:bg-sky-500
-                    hover:border-sky-500
+                    md:pt-[28px]
                   "
-                />
-
-              </div>
-
-              {submitted &&
-                !clave.codigo.trim() && (
-                  <small
+                >
+                  <Button
+                    label="Agregar clave"
+                    icon="pi pi-plus"
+                    loading={
+                      guardando
+                    }
+                    disabled={
+                      !puedeAgregar ||
+                      !clave.productoId
+                    }
+                    onClick={guardar}
                     className="
-                      p-error
-                      block
-                      mt-1
+                      h-[42px]
+                      p-0
+                      text-white
+                      bg-transparent
+                      border-none
+                      shadow-none
+                      hover:bg-transparent
+                      hover:text-white
+                      focus:bg-transparent
+                      focus:text-white
                     "
-                  >
-                    El código de
-                    activación es obligatorio.
-                  </small>
-                )}
-
+                  />
+                </div>
+              </div>
             </div>
           )}
 
@@ -699,7 +692,6 @@ export default function ClavesActivacion() {
                 gap-3
               "
             >
-
               <i
                 className="
                   pi
@@ -718,14 +710,11 @@ export default function ClavesActivacion() {
                 No tienes permisos para
                 agregar claves de activación.
               </p>
-
             </div>
           )}
-
         </div>
-
       </div>
-
     </div>
   );
 }
+
